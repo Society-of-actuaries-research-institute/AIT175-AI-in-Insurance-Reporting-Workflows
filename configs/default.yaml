@@ -1,0 +1,107 @@
+app:
+  name: ai-insurance-reporting
+  env: dev
+
+logging:
+  level: INFO
+  format: "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+
+paths:
+  artifacts_dir: artifacts
+  data_input_dir: artifacts/data/raw
+  data_processed_dir: artifacts/data/processed
+  reports_dir: artifacts/reports
+  figures_dir: artifacts/figures
+  models_dir: artifacts/models
+  logs_dir: artifacts/logs
+
+interfaces:
+  default: cli
+
+validation:
+  reserve_tolerance_pct: 0.03
+  reserve_min_tolerance: 25000.0
+  csm_tolerance_pct: 0.03
+  csm_min_tolerance: 5000.0
+  capital_tolerance_pct: 0.04
+  capital_min_tolerance: 10000.0
+  synthetic_issue_count: 4
+
+reporting:
+  insight_detection:
+    historical_window: 4
+    volatility_epsilon: 1.0
+    moderate_zscore: 0.75
+    material_zscore: 1.5
+    critical_zscore: 2.25
+    moderate_pct_change: 0.05
+    material_pct_change: 0.12
+    critical_pct_change: 0.2
+    top_n: 25
+  anomaly_investigation:
+    historical_window: 4
+    support_score_high: 0.75
+    support_score_medium: 0.5
+    scenario_context_lookback: 1
+    include_explainability: true
+  narrative_quality:
+    direction_tolerance: 0.01
+    severity_material_pct: 0.12
+    severity_critical_pct: 0.2
+    driver_match_top_n: 5
+  scenario_reporting:
+    impact_epsilon: 1.0
+    materiality_pct: 0.05
+    top_metrics_count: 5
+    top_segments_count: 10
+  movement_analysis:
+    epsilon: 1.0
+    top_steps_per_metric: 3
+    summary_top_n: 8
+    new_business_premium_weight: 180.0
+    retention_weight: 0.9
+    rate_change_weight: 0.8
+    claims_frequency_weight: 1.0
+    claims_severity_weight: 1.0
+    claims_assumption_weight: 950.0
+    reserve_new_business_weight: 32.0
+    reserve_claims_weight: 0.75
+    reserve_economic_weight: 1.8
+    reserve_runoff_weight: 0.18
+    csm_assumption_weight: 0.55
+    capital_underwriting_weight: 0.08
+    capital_investment_weight: 0.6
+    capital_reserve_weight: 0.04
+    capital_csm_weight: 0.05
+  full_report:
+    max_insights: 5
+    max_anomalies: 5
+    max_movement_rows: 6
+    max_narrative_statements: 8
+    max_quality_warnings: 5
+    max_figures: 8
+  llm_drafting:
+    enabled: true
+    skip_mock_provider: true
+    max_input_sections: 12
+    max_input_characters: 12000
+  chatbot:
+    demo_query_limit: 12
+    retrieval_top_k: 5
+  llm_evaluation:
+    benchmark_query_limit: 12
+    passing_score: 0.7
+    grounded_weight: 0.4
+    artifact_match_weight: 0.35
+    tool_match_weight: 0.15
+    citation_weight: 0.1
+    reviewer_default_status: pending_review
+  analyst_review:
+    max_items_per_source: 20
+    include_normal_insights: false
+    min_anomaly_support_score: 0.5
+    narrative_warning_priority: 0.7
+    min_llm_review_gap: 0.15
+    medium_priority_score: 0.4
+    high_priority_score: 0.65
+    critical_priority_score: 0.85
